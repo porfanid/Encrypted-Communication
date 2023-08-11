@@ -1,6 +1,7 @@
 # pgp keys
 *.asc
-
+# vscode
+.vscode/**
 # firebase key
 personal-site-key.json
 
