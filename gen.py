@@ -4,7 +4,7 @@ import os
 
 class Encrypted_Communication():
     def __init__(self, database):
-        self.gpg = gnupg.GPG()
+        self.gpg = gnupg.GPG(homedir='~/.gnupg/')
         self.database=database
     
     def generate_key(self, email):
@@ -22,7 +22,7 @@ class Encrypted_Communication():
                 public_key_file.write(private_key)
         except Exception as e:
             pass
-        self.database.register_client(str(public_key), email)
+        self.database.register_client(str(public_key))
         return str(public_key)
 
     def encrypt_message(self,message, key):
@@ -31,6 +31,16 @@ class Encrypted_Communication():
         return str(encrypted_data)
 
     def decrypt_message(self, message):
-        decrypted_data = self.gpg.decrypt(
-            message)
-        return str(decrypted_data)
+        
+            
+        # Decrypt message
+        decrypted_data = self.gpg.decrypt(message)
+        
+        # Print the complete status message from GnuPG
+        print("GnuPG Status Message:", decrypted_data.status)
+        
+        if decrypted_data.ok:
+            return str(decrypted_data)
+        else:
+            print("Decryption failed:", decrypted_data)
+            raise ValueError("Decryption failed")

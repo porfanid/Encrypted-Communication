@@ -1,5 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
+import base64
 
 class Database():
 
@@ -12,15 +13,15 @@ class Database():
         self.db = firestore.client()
         self.email=email
     
-    def register_client(self, client_key, client_email):
+    def register_client(self, client_key):
         # Create a new document in a collection named "entries"
         collection_ref = self.db.collection('clients')
-        new_doc_ref = collection_ref.document(client_email)
+        new_doc_ref = collection_ref.document(self.email)
         
         new_doc_ref.set({
             'key': client_key,
-            'email': client_email,
-            'timestamp': firebase_admin.firestore.SERVER_TIMESTAMP  # Optional timestamp
+            'email': self.email,
+            'timestamp': firestore.SERVER_TIMESTAMP  # Optional timestamp
         })
 
         print("Text entry stored in Firestore with ID:", new_doc_ref)
@@ -30,7 +31,7 @@ class Database():
         collection_ref = self.db.collection('messages')
         other_user = collection_ref.document(client_email)
         new_message_for_other_user = {
-            'message': message,
+            'message': base64.b64encode(message.encode('utf-8')),
             'from': self.email
         }
 
@@ -49,3 +50,15 @@ class Database():
         else:
             # Create the other user's document with the new message
             other_user.set({'messages': [new_message_for_other_user]})
+
+    
+    def get_messages(self, user_email):
+        collection_ref = self.db.collection('messages')
+        user_doc = collection_ref.document(user_email)
+        
+        user_data = user_doc.get().to_dict()
+        
+        if user_data and 'messages' in user_data:
+            return user_data['messages']
+        else:
+            return []
