@@ -14,7 +14,9 @@ class Database():
     def register_client(self, client_key, client_email):
         # Create a new document in a collection named "entries"
         collection_ref = self.db.collection('clients')
-        new_doc_ref = collection_ref.add({
+        new_doc_ref = collection_ref.document(client_email)
+        
+        new_doc_ref.set({
             'key': client_key,
             'email': client_email,
             'timestamp': firebase_admin.firestore.SERVER_TIMESTAMP  # Optional timestamp
