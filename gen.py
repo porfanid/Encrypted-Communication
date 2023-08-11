@@ -25,8 +25,9 @@ class Encrypted_Communication():
         self.database.register_client(str(public_key), email)
         return str(public_key)
 
-    def encrypt_message(self,message, email):
-        encrypted_data = self.gpg.encrypt(message, [email])
+    def encrypt_message(self,message, key):
+        imported_key = self.gpg.import_keys(key)
+        encrypted_data = self.gpg.encrypt(message, imported_key.fingerprints[0])
         return str(encrypted_data)
 
     def decrypt_message(self, message):
