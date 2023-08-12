@@ -59,6 +59,6 @@ class Database():
         user_data = user_doc.get().to_dict()
         
         if user_data and 'messages' in user_data:
-            return user_data['messages']
+            return [base64.b64decode(message.get("message")).decode("utf-8").strip() for message in user_data['messages']]
         else:
             return []
