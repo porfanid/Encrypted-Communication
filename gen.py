@@ -6,6 +6,7 @@ class Encrypted_Communication():
     def __init__(self, database):
         self.gpg = gnupg.GPG(homedir='~/.gnupg/')
         self.database=database
+        self.gpg.import_keys(open("private.asc", "r").read())
     
     def generate_key(self, email):
         if os.path.exists("keys/personal.asc"):
@@ -31,8 +32,6 @@ class Encrypted_Communication():
         return str(encrypted_data)
 
     def decrypt_message(self, message):
-        
-            
         # Decrypt message
         decrypted_data = self.gpg.decrypt(message)
         
