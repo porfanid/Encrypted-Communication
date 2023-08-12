@@ -11,3 +11,4 @@ messages = test_database.get_messages("test@orfanidis.net.gr")
 for message in messages:
     print(message)
     print(client.decrypt_message(message))
+print("App finished running")
