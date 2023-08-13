@@ -14,6 +14,14 @@ class MainScreen(QWidget):
         super().__init__(parent)
         self.ui = Ui_MainScreen()
         self.ui.setupUi(self)
+        self.ui.register_2.clicked.connect(self.register)
+
+    def register(self):
+        email_register=self.ui.email_register.text()
+        print("register clicked", email_register)
+class Application():
+    def register(self):
+        pass
 
 
 if __name__ == "__main__":

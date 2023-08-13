@@ -15,13 +15,13 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
-    QSizePolicy, QTextEdit, QWidget)
+from PySide6.QtWidgets import (QApplication, QCommandLinkButton, QLabel, QLineEdit,
+    QPushButton, QSizePolicy, QTextEdit, QWidget)
 
 class Ui_MainScreen(object):
     def setupUi(self, MainScreen):
         if not MainScreen.objectName():
-            MainScreen.setObjectName(u"Chat")
+            MainScreen.setObjectName(u"MainScreen")
         MainScreen.resize(800, 600)
         self.email_register = QLineEdit(MainScreen)
         self.email_register.setObjectName(u"email_register")
@@ -47,8 +47,12 @@ class Ui_MainScreen(object):
         self.send = QPushButton(MainScreen)
         self.send.setObjectName(u"send")
         self.send.setGeometry(QRect(280, 390, 87, 26))
+        self.commandLinkButton = QCommandLinkButton(MainScreen)
+        self.commandLinkButton.setObjectName(u"commandLinkButton")
+        self.commandLinkButton.setGeometry(QRect(380, 20, 175, 41))
 
         self.retranslateUi(MainScreen)
+        self.register_2.clicked.connect(self.commandLinkButton.showMenu)
 
         QMetaObject.connectSlotsByName(MainScreen)
     # setupUi
@@ -60,5 +64,6 @@ class Ui_MainScreen(object):
         self.label_2.setText(QCoreApplication.translate("MainScreen", u"Message", None))
         self.label_3.setText(QCoreApplication.translate("MainScreen", u"Email", None))
         self.send.setText(QCoreApplication.translate("MainScreen", u"Send", None))
+        self.commandLinkButton.setText(QCoreApplication.translate("MainScreen", u"Hello", None))
     # retranslateUi
 

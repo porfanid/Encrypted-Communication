@@ -108,7 +108,37 @@
     <string>Send</string>
    </property>
   </widget>
+  <widget class="QCommandLinkButton" name="commandLinkButton">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>20</y>
+     <width>175</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Hello</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>register_2</sender>
+   <signal>clicked()</signal>
+   <receiver>commandLinkButton</receiver>
+   <slot>showMenu()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>83</x>
+     <y>72</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>59</x>
+     <y>24</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
