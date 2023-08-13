@@ -4,7 +4,7 @@ sys.path.append("..")
 from gen import Encrypted_Communication
 from send_to_server import Database
 
-from PySide6.QtWidgets import QApplication, QWidget
+from PySide6.QtWidgets import QApplication, QWidget, QMessageBox
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
@@ -30,7 +30,15 @@ class MainScreen(QWidget):
         email_register=self.ui.email_register.text()
         self.database.set_email(email_register)
         self.key=self.client.generate_key(email_register)
+        self.show_message("You can successfully chat")
         print("register clicked", email_register)
+    
+    def show_message(self, message):
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Chat Message")
+        msg_box.setText(message)
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.exec()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
