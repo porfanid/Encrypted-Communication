@@ -40,6 +40,7 @@ class MainScreen(QWidget):
         encrypted_message = self.client.encrypt_message(message, key)
         self.database.send_message(email_receiver, encrypted_message)
         self.show_message("Message has been sent successfully")
+        self.ui.textEdit.setText("")
     
     def show_message(self, message):
         msg_box = QMessageBox()
