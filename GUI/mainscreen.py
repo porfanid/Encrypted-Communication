@@ -38,7 +38,8 @@ class MainScreen(QWidget):
         for message, sender in self.messages:
             print(message)
             print(sender)
-            self.client.decrypt_message(message)
+            message=self.client.decrypt_message(message)
+            print("message is: ",message)
         # print(self.messages)
     
     def send_message(self):
