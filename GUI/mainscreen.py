@@ -21,6 +21,7 @@ class MainScreen(QWidget):
         # adding the base functions
         self.database=Database()
         self.client=Encrypted_Communication(self.database)
+        self.key=None
 
         # adding the functions to the buttons
         self.ui.register_2.clicked.connect(self.register)
@@ -28,7 +29,7 @@ class MainScreen(QWidget):
     def register(self):
         email_register=self.ui.email_register.text()
         self.database.set_email(email_register)
-        key=self.client.generate_key(email_register)
+        self.key=self.client.generate_key(email_register)
         print("register clicked", email_register)
 
 if __name__ == "__main__":

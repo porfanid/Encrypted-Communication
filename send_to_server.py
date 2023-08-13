@@ -5,7 +5,7 @@ import base64
 class Database():
 
     def __init__(self, email=None):
-        cred = credentials.Certificate("./personal-site-key.json")
+        cred = credentials.Certificate("../personal-site-key.json")
 
         firebase_admin.initialize_app(cred)
 
