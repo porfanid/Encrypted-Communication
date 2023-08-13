@@ -46,7 +46,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Register</string>
+    <string>Start Chat</string>
    </property>
   </widget>
   <widget class="QTextEdit" name="textEdit">

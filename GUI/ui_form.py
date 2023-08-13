@@ -60,7 +60,7 @@ class Ui_MainScreen(object):
     def retranslateUi(self, MainScreen):
         MainScreen.setWindowTitle(QCoreApplication.translate("MainScreen", u"MainScreen", None))
         self.label.setText(QCoreApplication.translate("MainScreen", u"Email:", None))
-        self.register_2.setText(QCoreApplication.translate("MainScreen", u"Register", None))
+        self.register_2.setText(QCoreApplication.translate("MainScreen", u"Start Chat", None))
         self.label_2.setText(QCoreApplication.translate("MainScreen", u"Message", None))
         self.label_3.setText(QCoreApplication.translate("MainScreen", u"Email", None))
         self.send.setText(QCoreApplication.translate("MainScreen", u"Send", None))

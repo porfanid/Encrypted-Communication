@@ -25,13 +25,21 @@ class MainScreen(QWidget):
 
         # adding the functions to the buttons
         self.ui.register_2.clicked.connect(self.register)
+        self.ui.send.clicked.connect(self.send_message)
 
     def register(self):
         email_register=self.ui.email_register.text()
         self.database.set_email(email_register)
         self.key=self.client.generate_key(email_register)
         self.show_message("You can successfully chat")
-        print("register clicked", email_register)
+    
+    def send_message(self):
+        email_receiver=self.ui.email_receiver.text()
+        message = self.ui.textEdit.toPlainText()
+        key = open("../keys/"+email_receiver+".asc").read()
+        encrypted_message = self.client.encrypt_message(message, key)
+        self.database.send_message(email_receiver, encrypted_message)
+        self.show_message("Message has been sent successfully")
     
     def show_message(self, message):
         msg_box = QMessageBox()
