@@ -19,7 +19,7 @@ class Database():
         new_doc_ref = collection_ref.document(email)
         
         new_doc_ref.set({
-            'key': base64.b64encode(client_key),
+            'key': base64.b64encode(client_key.encode('utf-8')),
             'email': email,
             'timestamp': firestore.SERVER_TIMESTAMP  # Optional timestamp
         })
