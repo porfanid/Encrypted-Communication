@@ -21,7 +21,8 @@ class MainScreen(QWidget):
         # adding the base functions
         self.database=Database()
         self.client=Encrypted_Communication(self.database)
-        self.key=None
+        self.email=None
+        self.messages=[]
 
         # adding the functions to the buttons
         self.ui.register_2.clicked.connect(self.register)
@@ -31,7 +32,13 @@ class MainScreen(QWidget):
         email_register=self.ui.email_register.text()
         self.database.set_email(email_register)
         self.key=self.client.generate_key(email_register)
+        self.email=email_register
+        self.get_messages()
         self.show_message("You can successfully chat")
+        for message in self.messages:
+            print(message)
+            self.client.decrypt_message(message)
+        # print(self.messages)
     
     def send_message(self):
         email_receiver=self.ui.email_receiver.text()
@@ -48,6 +55,9 @@ class MainScreen(QWidget):
         msg_box.setText(message)
         msg_box.setIcon(QMessageBox.Information)
         msg_box.exec()
+
+    def get_messages(self):
+        self.messages = [message for message in self.database.get_messages(self.email)]
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
