@@ -1,7 +1,10 @@
 # This Python file uses the following encoding: utf-8
 import sys
+sys.path.append("..")
+from gen import Encrypted_Communication
+from send_to_server import Database
 
-from PySide6.QtWidgets import QApplication, QWidget
+from PySide6.QtWidgets import QApplication, QWidget, QMessageBox
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
@@ -15,6 +18,48 @@ class MainScreen(QWidget):
         self.ui = Ui_MainScreen()
         self.ui.setupUi(self)
 
+        # adding the base functions
+        self.database=Database()
+        self.client=Encrypted_Communication(self.database)
+        self.email=None
+        self.messages=[]
+
+        # adding the functions to the buttons
+        self.ui.register_2.clicked.connect(self.register)
+        self.ui.send.clicked.connect(self.send_message)
+
+    def register(self):
+        email_register=self.ui.email_register.text()
+        self.database.set_email(email_register)
+        self.key=self.client.generate_key(email_register)
+        self.email=email_register
+        self.get_messages()
+        self.show_message("You can successfully chat")
+        for message, sender in self.messages:
+            print(message)
+            print(sender)
+            message=self.client.decrypt_message(message)
+            print("message is: ",message)
+        # print(self.messages)
+    
+    def send_message(self):
+        email_receiver=self.ui.email_receiver.text()
+        message = self.ui.textEdit.toPlainText()
+        key = open("../keys/"+email_receiver+".asc").read()
+        encrypted_message = self.client.encrypt_message(message, key)
+        self.database.send_message(email_receiver, encrypted_message)
+        self.show_message("Message has been sent successfully")
+        self.ui.textEdit.setText("")
+    
+    def show_message(self, message):
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Chat Message")
+        msg_box.setText(message)
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.exec()
+
+    def get_messages(self):
+        self.messages = [message for message in self.database.get_messages(self.email)]
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

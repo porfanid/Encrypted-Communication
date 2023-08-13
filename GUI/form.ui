@@ -46,14 +46,14 @@
     </rect>
    </property>
    <property name="text">
-    <string>Register</string>
+    <string>Start Chat</string>
    </property>
   </widget>
   <widget class="QTextEdit" name="textEdit">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>160</y>
+     <x>20</x>
+     <y>330</y>
      <width>671</width>
      <height>221</height>
     </rect>
@@ -63,7 +63,7 @@
    <property name="geometry">
     <rect>
      <x>220</x>
-     <y>110</y>
+     <y>290</y>
      <width>241</width>
      <height>26</height>
     </rect>
@@ -72,8 +72,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>140</y>
+     <x>10</x>
+     <y>300</y>
      <width>66</width>
      <height>18</height>
     </rect>
@@ -86,7 +86,7 @@
    <property name="geometry">
     <rect>
      <x>170</x>
-     <y>120</y>
+     <y>290</y>
      <width>41</width>
      <height>18</height>
     </rect>
@@ -98,14 +98,37 @@
   <widget class="QPushButton" name="send">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>390</y>
+     <x>330</x>
+     <y>570</y>
      <width>87</width>
      <height>26</height>
     </rect>
    </property>
    <property name="text">
     <string>Send</string>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="textBrowser">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>50</y>
+     <width>561</width>
+     <height>231</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>10</y>
+     <width>66</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Messages</string>
    </property>
   </widget>
  </widget>
