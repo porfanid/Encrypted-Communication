@@ -1,5 +1,8 @@
 # This Python file uses the following encoding: utf-8
 import sys
+sys.path.append("..")
+from gen import Encrypted_Communication
+from send_to_server import Database
 
 from PySide6.QtWidgets import QApplication, QWidget
 
@@ -14,15 +17,19 @@ class MainScreen(QWidget):
         super().__init__(parent)
         self.ui = Ui_MainScreen()
         self.ui.setupUi(self)
+
+        # adding the base functions
+        self.database=Database()
+        self.client=Encrypted_Communication(self.database)
+
+        # adding the functions to the buttons
         self.ui.register_2.clicked.connect(self.register)
 
     def register(self):
         email_register=self.ui.email_register.text()
+        self.database.set_email(email_register)
+        key=self.client.generate_key(email_register)
         print("register clicked", email_register)
-class Application():
-    def register(self):
-        pass
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

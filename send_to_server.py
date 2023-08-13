@@ -4,7 +4,7 @@ import base64
 
 class Database():
 
-    def __init__(self, email):
+    def __init__(self, email=None):
         cred = credentials.Certificate("./personal-site-key.json")
 
         firebase_admin.initialize_app(cred)
@@ -13,19 +13,22 @@ class Database():
         self.db = firestore.client()
         self.email=email
     
-    def register_client(self, client_key):
+    def register_client(self, client_key, email):
         # Create a new document in a collection named "entries"
         collection_ref = self.db.collection('clients')
-        new_doc_ref = collection_ref.document(self.email)
+        new_doc_ref = collection_ref.document(email)
         
         new_doc_ref.set({
             'key': client_key,
-            'email': self.email,
+            'email': email,
             'timestamp': firestore.SERVER_TIMESTAMP  # Optional timestamp
         })
 
         print("Text entry stored in Firestore with ID:", new_doc_ref)
         return True
+    
+    def set_email(self, email):
+        self.email=email
     
     def send_message(self, client_email, message):
         collection_ref = self.db.collection('messages')
