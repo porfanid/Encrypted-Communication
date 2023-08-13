@@ -35,8 +35,9 @@ class MainScreen(QWidget):
         self.email=email_register
         self.get_messages()
         self.show_message("You can successfully chat")
-        for message in self.messages:
+        for message, sender in self.messages:
             print(message)
+            print(sender)
             self.client.decrypt_message(message)
         # print(self.messages)
     

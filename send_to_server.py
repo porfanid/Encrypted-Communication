@@ -19,7 +19,7 @@ class Database():
         new_doc_ref = collection_ref.document(email)
         
         new_doc_ref.set({
-            'key': client_key,
+            'key': base64.b64encode(client_key),
             'email': email,
             'timestamp': firestore.SERVER_TIMESTAMP  # Optional timestamp
         })
@@ -44,10 +44,8 @@ class Database():
             # Retrieve the existing list of messages for the other user
             other_user_data = other_user.get().to_dict()
             other_user_messages = other_user_data.get('messages', [])
-            
             # Add the new message to the other user's list
             other_user_messages.append(new_message_for_other_user)
-            
             # Update the other user's document with the new message list
             other_user.set({'messages': other_user_messages}, merge=True)
         else:
@@ -58,10 +56,8 @@ class Database():
     def get_messages(self, user_email):
         collection_ref = self.db.collection('messages')
         user_doc = collection_ref.document(user_email)
-        
         user_data = user_doc.get().to_dict()
-        
         if user_data and 'messages' in user_data:
-            return [base64.b64decode(message.get("message")).decode("utf-8").strip() for message in user_data['messages']]
+            return [(base64.b64decode(message.get("message")).decode("utf-8").strip(), message.get("from")) for message in user_data['messages']]
         else:
             return []
