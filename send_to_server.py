@@ -1,7 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
 import base64
-import ntplib,datetime
+import ntplib
 
 class Database():
 
