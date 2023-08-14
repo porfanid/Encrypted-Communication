@@ -41,9 +41,9 @@ class Encrypted_Communication():
     def decrypt_message(self, message):
         decrypted_data = None
         try:
-            self.gpg.import_keys(open("../private.asc", "r").read())
+            key = self.gpg.import_keys(open("../private.asc", "r").read())
             # Decrypt message
-            decrypted_data = self.gpg.decrypt(message)
+            decrypted_data = self.gpg.decrypt(message, passphrase=key)
             return str(decrypted_data)
         except Exception as e:
             # Handle other exceptions
