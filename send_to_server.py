@@ -1,6 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
 import base64
+import ntplib,datetime
 
 class Database():
 
@@ -12,6 +13,7 @@ class Database():
         # Initialize Firestore
         self.db = firestore.client()
         self.email=email
+        self.ntp = ntplib.NTPClient()
     
     def register_client(self, client_key, email):
         # Create a new document in a collection named "entries"
@@ -21,7 +23,7 @@ class Database():
         new_doc_ref.set({
             'key': base64.b64encode(client_key.encode('utf-8')),
             'email': email,
-            'timestamp': firestore.SERVER_TIMESTAMP  # Optional timestamp
+            'timestamp': int(self.ntp.request('europe.pool.ntp.org').tx_time * 1000)  # Optional timestamp
         })
 
         print("Text entry stored in Firestore with ID:", new_doc_ref)
@@ -35,7 +37,8 @@ class Database():
         other_user = collection_ref.document(client_email)
         new_message_for_other_user = {
             'message': base64.b64encode(message.encode('utf-8')),
-            'from': self.email
+            'from': self.email,
+            'timestamp': int(self.ntp.request('europe.pool.ntp.org').tx_time * 1000)  # Optional timestamp
         }
 
         
